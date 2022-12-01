@@ -1,5 +1,3 @@
-fffff
-
 yes = 'Yes' 'yes' 'Y' 'y' 'ya' 'Ya'
 no = 'No' 'no' 'n' 'N' 'na' 'Na'
 a = 'a' 'A' 
