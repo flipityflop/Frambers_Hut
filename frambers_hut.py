@@ -196,16 +196,17 @@ def hut_choice1(map_done, from_door, choice_loop, times_tried, scared):
     if choice in a:
         print("The door seems jammed from damp.")
         choice_d = input("What do you do?>> ")
-        choice_d = choice_d.strip()
-        if choice_d == 'kick' or choice_d == 'push':
+        choice_d = choice_d.strip(); choice_d = choice_d.fold()
+        break_door = 'kick' 'kick door' 'push' 'push door' 'wack' 'break' 'break down door'
+        if choice_d in break_door:
             print("The door gives way with a dusty squelch...")
-            living_room()
+            living_room(map_done)
         elif choice_d == 'knock':
             print("Bro, I think there's no one home. Do you wanna bust in?")
             choice_k = input("Yes or No?>> ")
             if choice_k in yes:
                 print("The door gives way with a dusty squelch")
-                living_room()
+                living_room(map_done)
             else:
                 hut_choice1(map_done, 'nonlooped', 'a', times_tried, scared)
         elif choice_d == 'go back' or choice_d == 'turn around' or choice_d == 'back':
@@ -285,6 +286,29 @@ def hut_choice1c(map_done, times_tried, scared):
     
 
             
+
+
+#Lving Room
+def living_room(map_done):
+    print("""\tYou walk inside the house.
+    Everything is covered in a thick layer of dust.
+    The sunlight wriggles through the windows, tinted green by the mildew.
+    *cough* *cough*
+    Before you lies a table. To your right, along the wall, a shelf stands. 
+    The room recedes in to the deeper shadows, but at the far end, just beyond two saggy chairs,
+    the faint outline of a door is visible.
+    To your left, there is another door, old and wooden.
+     """)
+    living_room_choice1(map_done)
+
+
+
+def living_room_choice1(map_done)
+    print("What do you want to do?")
+    choice = input(">> ")
+
+
+
 
 
 def hut_chest1(map_done, times_tried, scared):
