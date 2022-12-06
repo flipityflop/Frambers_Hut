@@ -196,7 +196,7 @@ def hut_choice1(map_done, from_door, choice_loop, times_tried, scared):
     if choice in a:
         print("The door seems jammed from damp.")
         choice_d = input("What do you do?>> ")
-        choice_d = choice_d.strip(); choice_d = choice_d.fold()
+        choice_d = choice_d.strip(); choice_d = choice_d.casefold()
         break_door = 'kick' 'kick door' 'push' 'push door' 'wack' 'break' 'break down door'
         if choice_d in break_door:
             print("The door gives way with a dusty squelch...")
