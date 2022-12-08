@@ -319,7 +319,7 @@ def hut_chest1(map_done, times_tried, scared):
     global hut_chest1_done
     hut_chest1_done = True
     cool_gem1 = True
-    hut_choice1(map_done, 'nonloope', 'none', times_tried, scared)
+    hut_choice1(map_done, 'nonlooped', 'none', times_tried, scared)
 
 
 
