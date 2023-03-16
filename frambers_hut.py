@@ -12,7 +12,12 @@ no = 'No' 'no' 'n' 'N' 'na' 'Na'
 a = 'a' 'A' 
 b = 'b' 'B'
 c = 'c' 'C'
+
+#Collected items
+gg_diary_note = False
+gator_statue = False
 hut_chest1_done = False
+sandwich = False
 
 user1 = input("What is your name?\n>> ") 
 print(f"Hello {user1},\nWelcome to\t\n...\n...\n...\nFRAMBER'S HUT!")
@@ -165,8 +170,117 @@ def decrypt_map():
         forest_choice1(True)
 
 
-    
 
+
+
+#Path to them gators
+
+
+def path_to_gators(map_done):
+    print("""
+    You walk carefully along a muddy path, that slowly winds past the house and off to to right,
+    back into the woods.
+    As you continue along, your boots slurp in the muds,
+    and the dense forest on either side slowly gives way to pools of water.
+    Tall grasses stick out amidst the massive and gnarled tress,
+    reigning like kings within their own small water kigndom.
+    You think you see a log with yellow eyes, but turns it it was just a evil looking gator.
+    You've reached the end of the path, and you find yourself before a boggy pool, silently surging with gators.
+    You spot something semi-submerged in the water, about 10 feet out.
+    Moss and algae are growing on it.
+    """)
+    gator_pool(map_done, False, 0)
+
+def gator_pool(map_done, fishing_hook, looked_nu):
+    choice = input("What do you do?>> ")
+    if choice in "look" and looked_nu < 3:
+        print("You see a few different things.\n\t*1. A fishing rod with a hook.\n\t*2. A boat.\n\t*3. A sandwich.")
+        looked_nu += 1
+        gator_pool(fishing_hook, looked_nu)
+    elif choice in "look" and looked_nu == 3:
+        print("Bud, stop stalling. You've seen what there is to see. Do something.")
+        looked_nu += 1
+        gator_pool(fishing_hook, looked_nu)
+    elif choice in "look" and looked_nu == 4:
+        print("""Bud, stop stalling. You've seen what there is t...
+        ...
+        o.
+        Theres's a old note on the ground, directly in front of you.
+        You open it and it reads: 
+        'Today I decided to throw my sweet gator statue into the water. 
+        It was a tough decision, but its clearly alive and has tried to eat me various times.
+        Still, it was a sweet statue. The cursed red eyes were my favorite.""")
+        global gg_diary_note
+        gg_diary_note = True
+        looked_nu += 1 
+        gator_pool(fishing_hook, looked_nu)
+    elif choice in "look" and looked_nu > 4:
+        print("You see the same 3 things that you saw before.\n\t*1. A fishing rod with a hook.\n\t*2. A boat.\n\t*3. A sandwich.")
+        print("There's nothing else. Stop.")
+        gator_pool(fishing_hook, looked_nu)
+    elif choice == 1 or choice in "hook" or choice in "rod":
+        print("You grab the hook and rod. You're too far from the statue to try and hook it.")
+        fishing_hook = True
+        gator_pool(fishing_hook, looked_nu)
+    elif choice == 2 or choice in "boat":
+        gg_boat(map_done, fishing_hook, looked_nu)
+    elif choice == 3 or choice in "sandwich" and sandwich == False:
+        print("You pick up the sandwich.")
+        choice = input("Do you A. want to keep, or B. feed the sandwich to the gators?\n>> ")
+        if choice in a or choice in "keep":
+            print("A delightful jingle plays, and you jump and hold the sandwich aloft.")
+            print("A little box pops up that says 'A tuna fish sandwich. This is the most powerful item in the game'")
+            print("That was neat. Anyway, you eat the sandwich and it is quite tasty.")
+            global sandwich
+            sandwich = True
+            gator_pool(map_done, fishing_hook, looked_nu)
+        else:
+            print("""Why? 
+            Why would you try to feed a sandwich to a murky pool of terrifying gators?
+            Why?
+            Anyway, you bend down to feed some sandwich, and you instantly are chomped upon by a horde of vicious, yellow eyed monsters.
+            Good job.""")
+            dead("You tried to feed gators, jesus christ.")
+    elif choice == 3 or choice in "sandwich" and sandwich == True:
+        print("You already got the sandwich. Try something else")
+        gator_pool(map_done, fishing_hook, looked_nu)
+    else:
+        print("What does that mean? Try do something clever or even coherent.")
+        gator_pool(map_done, fishing_hook, looked_nu)
+            
+
+        
+
+def gg_boat(map_done, fishing_hook, looked_nu):
+    print("You spot an ancient and quite trusty looking wooden rowboat.\nAs you climb in, a particularly meaty looking gator give you a knowing snarl\nThis is seems vaguely unwise.")
+    choice = input("Do you want to give it a shot?")
+    if choice in yes:
+        print("You row towards the object. As you get closer, you begin to see that it is a wicked gator statue with reddish glowing jewels for eyes.")
+        choice = input("Do you want to grab it? btw, that meaty gator is lying nearby, his mouth open, just waiting.\nYes or no?>> ")
+        if choice in yes:
+            print("The second you reach your hand out of the boat, the gator lunges up and literally pulls you under water, while biting your arm off.")
+            dead("You spend your final seconds grasping for breath and being chomped by gator.")
+        else:
+            print("Good choice. The gator looks particularly unhappy. Any other ideas?")
+            choice = input(">> ")
+            if choice in no:
+                print("Alright, you row boack to shore.")
+                gator_pool(fishing_hook, looked_nu)
+            elif choice in "hook" or choice in "rod" or choice in "fishing":
+                print("""From this distance, you can easily snag an tooth on the gator statue.
+                You firmly wedge the hook in a the ring for the oar and begin to row backwards.
+                With a delightful squelch, the gator slowly slinks up from the mud,
+                water and green sliding down from its mouth.
+                The gators in the watermove about in a frenzy, but you're not in some kind of flimsy boat.
+                You head back to shore with the figurine in tow, and you pull the beautiful, glowing eyed statue on to dry land.
+                """)
+                print("You head back towards the house.")
+                global gator_statue
+                gator_statue = True
+                hut(map_done)
+    else:
+        print("Ok")
+        gator_pool(map_done, fishing_hook, looked_nu)            
 
 #Hut
 
@@ -233,8 +347,11 @@ def hut_choice1b(map_done, times_tried, scared):
     elif scared == True:
         print("You tremble before the deepening of the shrouded cedar trees.")
         hut_choice1(map_done, 'nonlooped', 'none', times_tried, scared)
+    elif gators_statue == True:
+        print("You've already gone there.")
+        hut_choice1(map_done, 'nonlooped', 'none', times_tried, scared)
     else:
-        print("""\tYou seem to vaguely recall an intersting something on the map.
+        print("""\tYou seem to vaguely recall an interesting something on the map.
         You take a look...
         ...
         there's a nifty little trail that goes from here around the edge of the forest,
@@ -243,13 +360,13 @@ def hut_choice1b(map_done, times_tried, scared):
         The growl of a distant gator can be heard.
         Do you want to follow the path?""")
 
-    choice = input("Yes or No?>> ")
-    if choice in yes and scared == False:
-        path_to_gators(map_done)
-    else:
-        scared = True
-        print("You tremble before the deepening of the shrouded cedar trees.")
-        hut_choice1(map_done, 'nonlooped', 'none', times_tried, scared)
+        choice = input("Yes or No?>> ")
+        if choice in yes and scared == False:
+            path_to_gators(map_done)
+        else:
+            scared = True
+            print("You tremble before the deepening of the shrouded cedar trees.")
+            hut_choice1(map_done, 'nonlooped', 'none', times_tried, scared)
 
 
     

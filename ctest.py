@@ -1,144 +1,149 @@
+from sys import exit 
+
 yes = 'Yes' 'yes' 'Y' 'y' 'ya' 'Ya'
 no = 'No' 'no' 'n' 'N' 'na' 'Na'
 a = 'a' 'A' 
 b = 'b' 'B'
 c = 'c' 'C'
 #delete line on import
+#Collected items
+gg_diary_note = False
+gator_statue = False
+hut_chest1_done = False
+sandwich = False
+
 map_done = True
 
-def living_room(map_done):
-    print("""
-    You walk inside the house.
-    Everything is covered in a thick layer of dust.
-    The sunlight wriggles through the windows, tinted green by the mildew.
-    *cough* *cough*
-    Before you lies a table. To your right, along the wall, a shelf stands. 
-    The room recedes in to the deeper shadows, but at the far end, just beyond two saggy chairs,
-    the faint outline of a door is visible.
-    To your left, there is another door, old and wooden.
-     """)
-    living_room_choice1(map_done, False, False, 0)
-
-
-
-def living_room_choice1(map_done, table_done, shelf_done, tries):
-    print("What do you want to do?")
-    choice = input(">> ")
-    choice = choice.strip(); choice = choice.casefold()
-    #table = 'table', 'check table', 'check the table', 'see table', 'see the table'
-    #shelf = 'shelf', 'check'
-    if 'table' in choice and table_done == False:
-        print("You walk towards the table.")
-        print("""
-    The table is made of a dark walnut wood, full of deep grooves and cuts.
-    There's piles of open books and 2 or 3 empty glasses.
-    A pair of bronze spectacles lies upon a yellowed parchment, as though someone had just taken them off.
-    There's a silver tipped pen, lying in a little puddle of ink upon the parchment.
-    Something is lying underneath it all.""")
-        living_room_table(map_done, False, False, False, False)
-    elif 'table' in choice and table_done == True:
-        print("You already checked out the table, see what else you can find.")
-        living_room_choice1(map_done, table_done, shelf_done)
-    elif 'shelf' in choice and shelf_done == False:
-        print("You head to the shelf to see if there's anything cool.")
-        print("There's nothing but a dusty old jar, and a book entitled: 'How to Maintain your Personal Gorbel'")
-        print("You consider what a 'Gorbel' is, and turn back around to see what else there is in the room.")
-        living_room_choice1(map_done, table_done, shelf_done)
-    elif 'shelf' in choice and shelf_done == True:
-        print("There's nothing more to see on the shelf.")
-        living_room_choice1(map_done, table_done, shelf_done)
-    elif tries <= 2:
-        print("That's not something you can do. Try to pick something else.")
-        tries += 1
-        living_room_choice1(map_done, table_done, shelf_done, tries)
+def dead(why):
+    global lives_lost
+    #lives_lost += 1
+    print(why, "You're dead. \nDo you wanna try again?")
+    choice = input("Yes or no?>> ")
+    if choice in yes:
+        print("test exit")
+        exit(0)
     else:
-        print("That's not something you can do. Try to pick something else.")
-        print("HINT: try 'table', 'shelf', 'left door' or 'straight'.")
-        living_room_choice1(map_done, table_done, shelf_done, tries)
-
-
-def living_room_table(map_done, book_done, spectacle_done, parchment_done, sword_done):
-
-    choice = input("\nWhat do you want to examine?\n>> ")
-    choice = choice.strip(); choice = choice.casefold()
-    if 'book' in choice and book_done == False:
-        print("These books all seem to be written in a different language.")
-        print("One book has a picture of a majestic castle on the cover.")
-        print("Another is deep green with brass fittings on the corners.")
-        print("There's nothing useful to get from these books.")
-        book_done = True
-        living_room_table(map_done, book_done, spectacle_done, parchment_done, sword_done)
-    elif 'spectacle' in choice and spectacle_done == False:
-        print("""
-        You pick up the spectacles to examine them more closely.
-        They have thickly scratched lenses and the wire frames are a deeply bronze and bent.
-        You try them on, and now everything looks dusty and tinged by yellow.
-        They seem useful.
-        """)
-        choice_s = input("Do you want to keep them?\n>> ")
-        if yes in choice:
-            global have_spectacles
-            have_spectacles = True
-            spectacle_done = True
-            living_room_table(map_done, book_done, spectacle_done, parchment_done, sword_done)
-        else:
-            print("You put the spectacles back on the table and look at the other things on the table.")
-            spectacle_done = True
-            living_room_table(map_done, book_done, spectacle_done, parchment_done, sword_done)
-    elif 'parchment' in choice and parchment_done == False:
-        print("""
-        You gently lift the parchment from the table to get a better look...
-        ..........................
-        The parchment is quite old and begins to crumble in your hand...
-        You make out some words, names perhaps?
-        There's a 'Jesse'...
-        and maybe a 'Arthur'?
-        The parchment is gone now, part of the dust.
-        """)
-        parchment_done = True
-        living_room_table(map_done, book_done, spectacle_done, parchment_done, sword_done)
-    elif 'underneath' in choice or 'table' in choice and sword_done == False:
-        print("You clear everything off, and underneath is a sweet sword.")
-        choice_s = input("Examine?\n>> ")
-        if choice_s in yes:
-            global frambers_sword
-            print("""
-            You look more closely at the blade.
-            It is made of a deep grey metal, perhaps a burnt steel.
-            There's a wicked swirling pattern etched into the blade, fine as a shimmering star.
-            The handle is round, and wrapped in a carefully polished leather strap.
-            There's an engraving on the handle, inlaid with a reddish gold. It says "Framber's Aqua".
-            This sword is in exceptional condition.
-            """)
-            choice_s = input("Do you want to keep the sword?\n>> ")
-            if choice in yes:
-                frambers_sword = True
-                sword_done = True
-                living_room_table(map_done, book_done, spectacle_done, parchment_done, sword_done)
-            else:
-                print("Alright, you put this really cool sword back on the table.")    
-                frambers_sword = False
-                sword_done = True
-                living_room_table(map_done, book_done, spectacle_done, parchment_done, sword_done)
-        else:
-            choice_s = input("Do you want to keep the sword?\n>> ")
-            if choice in yes:
-                frambers_sword = True
-                sword_done = True
-                living_room_table(map_done, book_done, spectacle_done, parchment_done, sword_done)
-            else:
-                print("Alright, you put this really cool sword back on the table.")    
-                frambers_sword = False
-                sword_done = True
-                living_room_table(map_done, book_done, spectacle_done, parchment_done, sword_done)
-    
-
-    else:
+        print(f"Thanks for playing, you lost {lives_lost} lives in your journey through Framber's Hut. \nGoodbye!")
         exit(0)
 
+def hut(map_done):
+    print("sucess")
+    exit(0)
+
+#Path to them gators
 
 
-    
+def path_to_gators(map_done):
+    print("""
+    You walk carefully along a muddy path, that slowly winds past the house and off to to right,
+    back into the woods.
+    As you continue along, your boots slurp in the muds,
+    and the dense forest on either side slowly gives way to pools of water.
+    Tall grasses stick out amidst the massive and gnarled tress,
+    reigning like kings within their own small water kigndom.
+    You think you see a log with yellow eyes, but turns it it was just a evil looking gator.
+    You've reached the end of the path, and you find yourself before a boggy pool, silently surging with gators.
+    You spot something semi-submerged in the water, about 10 feet out.
+    Moss and algae are growing on it.
+    """)
+    gator_pool(map_done, False, 0)
+
+def gator_pool(map_done, fishing_hook, looked_nu):
+    fishing_hook = False
+    choice = input("What do you do?>> ")
+    if "look" in choice and looked_nu < 3:
+        print("You see a few different things.\n\t*A. A fishing rod with a hook.\n\t*B. A boat.\n\t*C. A sandwich.")
+        looked_nu += 1
+        gator_pool(map_done, fishing_hook, looked_nu)
+    elif "look" in choice and looked_nu == 3:
+        print("Bud, stop stalling. You've seen what there is to see. Do something.")
+        looked_nu += 1
+        gator_pool(map_done, fishing_hook, looked_nu)
+    elif "look" in choice and looked_nu == 4:
+        print("""Bud, stop stalling. You've seen what there is t...
+    ...
+    o.
+    Theres's a old note on the ground, directly in front of you.
+    You open it and it reads: 
+    'Today I decided to throw my sweet gator statue into the water. 
+    It was a tough decision, but its clearly alive and has tried to eat me various times.
+    Still, it was a sweet statue. The cursed red eyes were my favorite.'
+    You put the note in your pocket.""")
+        global gg_diary_note
+        gg_diary_note = True
+        looked_nu += 1 
+        gator_pool(map_done, fishing_hook, looked_nu)
+    elif "look" in choice and looked_nu > 4:
+        print("You see the same 3 things that you saw before.\n\t*A. A fishing rod with a hook.\n\t*B. A boat.\n\t*C. A sandwich.")
+        print("There's nothing else. Stop.")
+        gator_pool(map_done, fishing_hook, looked_nu)
+    elif choice in a or "hook" in choice or "rod" in choice:
+        print("You grab the hook and rod. You're too far from the statue to try and hook it.")
+        fishing_hook = True
+        gator_pool(map_done, fishing_hook, looked_nu)
+    elif choice in b or "boat" in choice:
+        gg_boat(map_done, fishing_hook, looked_nu)
+    elif choice in c or "sandwich" in choice and sandwich == False:
+        print("You pick up the sandwich.")
+        choice = input("Do you A. want to keep, or B. feed the sandwich to the gators?\n>> ")
+        if choice in a or choice in "keep":
+            print("A delightful jingle plays, and you jump and hold the sandwich aloft.")
+            print("A little box pops up that says 'A tuna fish sandwich. This is the most powerful item in the game'")
+            print("That was neat. Anyway, you eat the sandwich and it is quite tasty.")
+            #global sandwich
+            sandwich = True
+            gator_pool(map_done, fishing_hook, looked_nu)
+        else:
+            print("""Why? 
+            Why would you try to feed a sandwich to a murky pool of terrifying gators?
+            Why?
+            Anyway, you bend down to feed some sandwich, and you instantly are chomped upon by a horde of vicious, yellow eyed monsters.
+            Good job.""")
+            dead("You tried to feed gators, jesus christ.")
+    elif choice == 3 or "sandwich" in choice and sandwich == True:
+        print("You already got the sandwich. Try something else")
+        gator_pool(map_done, fishing_hook, looked_nu)
+    else:
+        print("What does that mean? Try do something clever or even coherent.")
+        gator_pool(map_done, fishing_hook, looked_nu)
+            
+
+def gg_boat(map_done, fishing_hook, looked_nu):
+    print("You spot an ancient and quite trusty looking wooden rowboat.\nAs you climb in, a particularly meaty looking gator give you a knowing snarl\nThis is seems vaguely unwise.")
+    choice = input("Do you want to give it a shot?>> ")
+    if choice in yes:
+        print("You row towards the object. As you get closer, you begin to see that it is a wicked gator statue with reddish glowing jewels for eyes.")
+        choice = input("Do you want to grab it? btw, that meaty gator is lying nearby, his mouth open, just waiting.\nYes or no?>> ")
+        if choice in yes:
+            print("The second you reach your hand out of the boat, the gator lunges up and literally pulls you under water, while biting your arm off.")
+            dead("You spend your final seconds grasping for breath and being chomped by gator.")
+        else:
+            print("Good choice. The gator looks particularly unhappy. Any other ideas?")
+            choice = input(">> ")
+            if choice in no:
+                print("Alright, you row boack to shore.")
+                gator_pool(fishing_hook, looked_nu)
+            elif "hook" in choice or "rod" in choice or "fishing" in choice and fishing_hook == True:
+                print("""From this distance, you can easily snag an tooth on the gator statue.
+                You firmly wedge the hook in a the ring for the oar and begin to row backwards.
+                With a delightful squelch, the gator slowly slinks up from the mud,
+                water and green sliding down from its mouth.
+                The gators in the watermove about in a frenzy, but you're not in some kind of flimsy boat.
+                You head back to shore with the figurine in tow, and you pull the beautiful, glowing eyed statue on to dry land.
+                """)
+                print("You head back towards the house.")
+                #global gator_statue
+                gator_statue = True
+                hut(map_done)
+            elif "hook" in choice or "rod" in choice or "fishing" in choice or fishing_hook == False:
+                print("You dont have anything to grab it with. There was something on shore, I think.")
+                gator_pool(map_done, fishing_hook, looked_nu)
+            else:
+                print("Well, I guess you should head back to shore.")
+                gator_pool(map_done, fishing_hook, looked_nu)
+    else:
+        print("Ok")
+        gator_pool(map_done, fishing_hook, looked_nu)            
 
 
-living_room(True)
+path_to_gators(map_done)
