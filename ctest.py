@@ -20,8 +20,8 @@ def dead(why):
     print(why, "You're dead. \nDo you wanna try again?")
     choice = input("Yes or no?>> ")
     if choice in yes:
-        print("test exit")
-        exit(0)
+        print("go")
+        path_to_gators(True)
     else:
         print(f"Thanks for playing, you lost {lives_lost} lives in your journey through Framber's Hut. \nGoodbye!")
         exit(0)
@@ -49,7 +49,7 @@ def path_to_gators(map_done):
     gator_pool(map_done, False, 0)
 
 def gator_pool(map_done, fishing_hook, looked_nu):
-    fishing_hook = False
+#    fishing_hook = False
     choice = input("What do you do?>> ")
     if "look" in choice and looked_nu < 3:
         print("You see a few different things.\n\t*A. A fishing rod with a hook.\n\t*B. A boat.\n\t*C. A sandwich.")
@@ -77,9 +77,12 @@ def gator_pool(map_done, fishing_hook, looked_nu):
         print("You see the same 3 things that you saw before.\n\t*A. A fishing rod with a hook.\n\t*B. A boat.\n\t*C. A sandwich.")
         print("There's nothing else. Stop.")
         gator_pool(map_done, fishing_hook, looked_nu)
-    elif choice in a or "hook" in choice or "rod" in choice:
+    elif fishing_hook == False and choice in a or "hook" in choice or "rod" in choice:
         print("You grab the hook and rod. You're too far from the statue to try and hook it.")
         fishing_hook = True
+        gator_pool(map_done, fishing_hook, looked_nu)
+    elif fishing_hook == True and choice in a or "hook" in choice or "rod" in choice:
+        print("You already have the fishing hook, what are you gonna do about it?")
         gator_pool(map_done, fishing_hook, looked_nu)
     elif choice in b or "boat" in choice:
         gg_boat(map_done, fishing_hook, looked_nu)
@@ -94,7 +97,8 @@ def gator_pool(map_done, fishing_hook, looked_nu):
             sandwich = True
             gator_pool(map_done, fishing_hook, looked_nu)
         else:
-            print("""Why? 
+            print("""
+            Why? 
             Why would you try to feed a sandwich to a murky pool of terrifying gators?
             Why?
             Anyway, you bend down to feed some sandwich, and you instantly are chomped upon by a horde of vicious, yellow eyed monsters.
@@ -123,20 +127,22 @@ def gg_boat(map_done, fishing_hook, looked_nu):
             if choice in no:
                 print("Alright, you row boack to shore.")
                 gator_pool(fishing_hook, looked_nu)
-            elif "hook" in choice or "rod" in choice or "fishing" in choice and fishing_hook == True:
-                print("""From this distance, you can easily snag an tooth on the gator statue.
-                You firmly wedge the hook in a the ring for the oar and begin to row backwards.
-                With a delightful squelch, the gator slowly slinks up from the mud,
-                water and green sliding down from its mouth.
-                The gators in the watermove about in a frenzy, but you're not in some kind of flimsy boat.
-                You head back to shore with the figurine in tow, and you pull the beautiful, glowing eyed statue on to dry land.
+            elif fishing_hook == True and "hook" in choice or "rod" in choice or "fishing" in choice:
+                print("""
+        From this distance, you can easily snag an tooth on the gator statue.
+        You firmly wedge the hook in a the ring for the oar and begin to row backwards.
+        With a delightful squelch, the gator slowly slinks up from the mud,
+        water and green sliding down from its mouth.
+        The gators in the watermove about in a frenzy, but you're not in some kind of flimsy boat.
+        You head back to shore with the figurine in tow, and you pull the beautiful, glowing eyed statue on to dry land.
                 """)
                 print("You head back towards the house.")
                 #global gator_statue
                 gator_statue = True
                 hut(map_done)
-            elif "hook" in choice or "rod" in choice or "fishing" in choice or fishing_hook == False:
+            elif fishing_hook == False and "hook" in choice or "rod" in choice or "fishing" in choice:
                 print("You dont have anything to grab it with. There was something on shore, I think.")
+                print("You head back to shore.")
                 gator_pool(map_done, fishing_hook, looked_nu)
             else:
                 print("Well, I guess you should head back to shore.")
