@@ -39,6 +39,7 @@ def dead(why):
         forest()
     else:
         print(f"Thanks for playing, you lost {lives_lost} lives in your journey through Framber's Hut. \nGoodbye!")
+        input(">> [PRESS ANY KEY TO EXIT]")
         exit(0)
 
 
